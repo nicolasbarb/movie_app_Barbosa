@@ -4,15 +4,19 @@ import 'package:movies_app/core/services/tmdbService.dart';
 import 'package:movies_app/ui/pages/detailMovie.dart';
 import 'package:movies_app/ui/widgets/movieCard.dart';
 
-class ItemHorizontalList extends StatelessWidget {
-  ItemHorizontalList({Key key, this.type}) : super(key: key);
 
-  final String type;
+typedef ItemHorizontalListBuilder<T> = Widget Function(BuildContext context, T item);
+
+class ItemHorizontalList<T> extends StatelessWidget {
+  ItemHorizontalList({Key key, this.future, this.itemBuilder}) : super(key: key);
+
+  final Future<List<T>> future;
+  final ItemHorizontalListBuilder<T> itemBuilder;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<dynamic>>(
-      future: TMDBService().getTMDBList(type),
+    return FutureBuilder<List<T>>(
+      future: future,
       builder: (context, snapshot){
         if(snapshot.hasData){
           return ListView.builder(
@@ -20,20 +24,7 @@ class ItemHorizontalList extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(builder: (_) => DetailMovie(
-                        movie: snapshot.data[index])),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: MovieCard(
-                      image: snapshot.data[index].poster,
-                    ),
-                  ),
-                );
+                return itemBuilder(context, snapshot.data[index]);
               }
           );
         }

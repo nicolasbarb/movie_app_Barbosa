@@ -3,8 +3,8 @@ import 'package:movies_app/core/models/movie.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
 import 'package:movies_app/ui/widgets/movieStyleCard.dart';
 
-class DetailMovie extends StatelessWidget {
-  DetailMovie({Key key, this.movie}) : super(key: key);
+class DetailItem extends StatelessWidget {
+  DetailItem({Key key, this.movie}) : super(key: key);
 
   final Movie movie;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MovieCard extends StatelessWidget {
-  MovieCard({Key key, this.image}) : super(key: key);
+class ItemCard extends StatelessWidget {
+  ItemCard({Key key, this.image}) : super(key: key);
   
   final String image;
   

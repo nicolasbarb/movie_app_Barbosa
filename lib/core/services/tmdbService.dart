@@ -3,12 +3,14 @@ import 'dart:ui';
 
 import 'package:http/http.dart' as http;
 import 'package:movies_app/core/models/movie.dart';
+import 'package:movies_app/core/models/tvShow.dart';
 
 class TMDBService {
 
-  static String popular = "popular";
-  static String upComing = "upcoming";
-  static String topRated = "top_rated";
+  static String popularMovie = "popular";
+  static String upComingMovie = "upcoming";
+  static String topRatedMovie = "top_rated";
+  static String popularTvShow = "popular";
 
 
   String apiKeyV3 = "a936a74485fd81f85cd67e773cec9cd8";
@@ -20,13 +22,30 @@ class TMDBService {
 
   String createImageUrl({String size = "w500", String imageEndpoint}) => "$imageUrl/$size$imageEndpoint";
 
-  Future<List<T>> getTMDBList<T>(String type) async {
+  Future<List<Movie>> getTMDBMovieList<T>(String type) async {
     String url = _createRequest("/movie/$type");
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
-      List<dynamic> list = jsonResponse['results'].map((iteration) => Movie.fromJson(iteration)).toList();
+      List<Movie> list = jsonResponse['results'].map((iteration) => Movie.fromJson(iteration)).toList();
+
+      return list;
+
+    } else {
+      print('Request failed with status: ${response.statusCode}. ${response.body}');
+    }
+    return [];
+
+  }
+
+  Future<List<TvShow>> getTMDBTvShowList<T>(String type) async {
+    String url = _createRequest("/tv/$type");
+
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
+      List<TvShow> list = jsonResponse['results'].map((iteration) => TvShow.fromJson(iteration)).toList();
 
       return list;
 

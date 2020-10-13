@@ -11,7 +11,19 @@ class MovieCard extends StatelessWidget {
       width: 100,
       child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-      child: Image(image: AssetImage(image))),
+      child: Image.network(image,
+        loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null ?
+              loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                  : null,
+            ),
+          );
+        },
+      ),
+      ),
     );
   }
 }

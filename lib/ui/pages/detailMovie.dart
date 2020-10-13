@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/models/movie.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
 import 'package:movies_app/ui/widgets/movieStyleCard.dart';
 
 class DetailMovie extends StatelessWidget {
-  DetailMovie({Key key, this.name, this.image}) : super(key: key);
+  DetailMovie({Key key, this.movie}) : super(key: key);
 
-  final String name;
-  final String image;
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,22 @@ class DetailMovie extends StatelessWidget {
         ),
       ),
       body: Stack(
-          fit: StackFit.expand,
           children: [
             Positioned(
               top: 0,
               child: Container(
                 width: SizeConfig.screenWidth,
-                child: Image(
-                  image: AssetImage(image),
+                child: Image.network(movie.poster,
+                  loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null ?
+                        loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -61,7 +69,7 @@ class DetailMovie extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name,
+                    Text(movie.title,
                     style: TextStyle(
                     color: Colors.white,
                     fontSize: 40
@@ -113,7 +121,7 @@ class DetailMovie extends StatelessWidget {
                             text: "Cast: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                             children: [
-                              TextSpan(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.", style: TextStyle(fontWeight: FontWeight.normal))
+                              TextSpan(text: movie.genreIds.length.toString(), style: TextStyle(fontWeight: FontWeight.normal))
                             ]
                         ),
                       ),
@@ -124,7 +132,7 @@ class DetailMovie extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      child: Text(movie.overview,
                         style: TextStyle(
                             color: Colors.white,
                         ),),

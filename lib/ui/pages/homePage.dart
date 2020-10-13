@@ -1,24 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/models/movie.dart';
-import 'package:movies_app/ui/pages/detailMovie.dart';
+import 'package:movies_app/core/services/tmdbService.dart';
 import 'package:movies_app/ui/widgets/itemHorizontalList.dart';
-import 'package:movies_app/ui/widgets/movieCard.dart';
 
 class HomePage extends StatelessWidget {
 
-  final List<Movie> popularMovieList = [Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),];
-
-
-  final List<Movie> popularTVShow = [Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),];
-
-  final List<Movie> bestMovies = [Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),
-    Movie(name: "Enola Holmes", image: "assets/images/enola.jpg"),];
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +16,17 @@ class HomePage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 15),
-              child: Text("Popular Movies", style: TextStyle(color: Colors.white, fontSize: 25),),
+              child: InkWell(
+                onTap: () {TMDBService().getTMDBList(TMDBService.popular);},
+                  child: Text("Popular Movies",
+                    style: TextStyle(color: Colors.white,
+                        fontSize: 25),
+                  )
+              ),
             ),
             Container(
               height: 150,
-                child: ItemHorizontalList(movieList: popularMovieList,)
+                child: ItemHorizontalList(type: TMDBService.popular,)
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15),
@@ -42,7 +34,7 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               height: 150,
-                child: ItemHorizontalList(movieList: popularTVShow,)
+                child: ItemHorizontalList(type: TMDBService.topRated,)
 
             ),
             Padding(
@@ -51,7 +43,7 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               height: 150,
-              child: ItemHorizontalList(movieList: bestMovies,)
+              child: ItemHorizontalList(type: TMDBService.upComing,)
             ),
           ],
         ),

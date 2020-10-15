@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/pages/detailMovie.dart';
+import 'package:movies_app/ui/pages/detailItem.dart';
 import 'package:movies_app/ui/pages/homePage.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
 

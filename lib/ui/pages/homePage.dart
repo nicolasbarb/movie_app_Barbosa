@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/models/movie.dart';
 import 'package:movies_app/core/models/tvShow.dart';
 import 'package:movies_app/core/services/tmdbService.dart';
-import 'package:movies_app/ui/pages/detailMovie.dart';
+import 'package:movies_app/ui/pages/detailItem.dart';
 import 'package:movies_app/ui/widgets/itemHorizontalList.dart';
 import 'package:movies_app/ui/widgets/movieCard.dart';
 
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute<void>(builder: (_) => DetailItem(
-                              movie: movie)),
+                              tmdbItem: movie)),
                         );
                       },
                       child: Padding(
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute<void>(builder: (_) => DetailItem(
-                              movie: tvshow)),
+                              tmdbItem: tvshow)),
                         );
                       },
                       child: Padding(
@@ -79,7 +79,23 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               height: 150,
-              child: ItemHorizontalList(future: tmbdService.getTMDBMovieList(TMDBService.popularMovie),
+              child: ItemHorizontalList(future: tmbdService.getTMDBTvShowList(TMDBService.popularTvShow),
+                itemBuilder: (BuildContext context, TvShow tvshow) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(builder: (_) => DetailItem(
+                            tmdbItem: tvshow)),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: ItemCard(
+                        image: tvshow.poster,
+                      ),
+                    ),
+                  );
+                },
               )
             ),
           ],

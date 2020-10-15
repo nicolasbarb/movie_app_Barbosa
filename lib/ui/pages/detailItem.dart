@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/models/movie.dart';
+import 'package:movies_app/core/models/tmdbItem.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
 import 'package:movies_app/ui/widgets/movieStyleCard.dart';
 
 class DetailItem extends StatelessWidget {
-  DetailItem({Key key, this.movie}) : super(key: key);
+  DetailItem({Key key, this.tmdbItem}) : super(key: key);
 
-  final Movie movie;
+  final TMDBItem tmdbItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -27,7 +29,7 @@ class DetailItem extends StatelessWidget {
               top: 0,
               child: Container(
                 width: SizeConfig.screenWidth,
-                child: Image.network(movie.poster,
+                child: Image.network(tmdbItem.poster,
                   loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(
@@ -64,12 +66,12 @@ class DetailItem extends StatelessWidget {
               bottom: 0,
               child: Container(
                 width: SizeConfig.screenWidth,
-                height: SizeConfig.screenHeight / 2,
+                height: SizeConfig.screenHeight / 2  + 30,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(movie.title,
+                    Text(tmdbItem.title,
                     style: TextStyle(
                     color: Colors.white,
                     fontSize: 40
@@ -85,7 +87,8 @@ class DetailItem extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: Text("2020",                     style: TextStyle(
+                            child: Text(tmdbItem.getYear(),
+                                style: TextStyle(
                                 color: Colors.white,
                             ),),
                           ),
@@ -95,7 +98,7 @@ class DetailItem extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: Text("7.6",                     style: TextStyle(
+                            child: Text(tmdbItem.voteAverage.toString(),                     style: TextStyle(
                                 color: Colors.orange,
                             ),),
                           )
@@ -121,7 +124,7 @@ class DetailItem extends StatelessWidget {
                             text: "Cast: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                             children: [
-                              TextSpan(text: movie.genreIds.length.toString(), style: TextStyle(fontWeight: FontWeight.normal))
+                              TextSpan(text: tmdbItem.genreIds.length.toString(), style: TextStyle(fontWeight: FontWeight.normal))
                             ]
                         ),
                       ),
@@ -131,11 +134,17 @@ class DetailItem extends StatelessWidget {
                       child: Text("Summary", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(movie.overview,
-                        style: TextStyle(
-                            color: Colors.white,
-                        ),),
+                      padding: const EdgeInsets.only(top: 5),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          height: 100,
+                          child: Text(tmdbItem.overview,
+                            maxLines: 5,
+                            style: TextStyle(
+                                color: Colors.white,
+                            ),),
+                        ),
+                      ),
                     )
                   ],
                 ),

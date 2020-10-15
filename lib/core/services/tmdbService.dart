@@ -28,7 +28,7 @@ class TMDBService {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
-      List<Movie> list = jsonResponse['results'].map((iteration) => Movie.fromJson(iteration)).toList();
+      List<Movie> list = jsonResponse['results'].map<Movie>((iteration) => Movie().fromJson(iteration)).toList();
 
       return list;
 
@@ -45,7 +45,7 @@ class TMDBService {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = convert.jsonDecode(response.body);
-      List<TvShow> list = jsonResponse['results'].map((iteration) => TvShow.fromJson(iteration)).toList();
+      List<TvShow> list = jsonResponse['results'].map<TvShow>((iteration) => TvShow().fromJson(iteration)).toList();
 
       return list;
 

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/models/movie.dart';
-import 'package:movies_app/core/services/tmdbService.dart';
-import 'package:movies_app/ui/pages/detailMovie.dart';
-import 'package:movies_app/ui/widgets/movieCard.dart';
 
 
 typedef ItemHorizontalListBuilder<T> = Widget Function(BuildContext context, T item);
@@ -18,6 +14,10 @@ class ItemHorizontalList<T> extends StatelessWidget {
     return FutureBuilder<List<T>>(
       future: future,
       builder: (context, snapshot){
+        if(snapshot.hasError){
+          print(snapshot.error);
+        }
+
         if(snapshot.hasData){
           return ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -29,8 +29,6 @@ class ItemHorizontalList<T> extends StatelessWidget {
           );
         }
         return Text("");
-
-
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/ui/pages/connectionPage.dart';
 import 'package:movies_app/ui/pages/detailItem.dart';
 import 'package:movies_app/ui/pages/homePage.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             // is not restarted.
             primarySwatch: Colors.blue,
           ),
-          home: HomePage(),
+          home: ConnectionPage(),
         );
       }
     );

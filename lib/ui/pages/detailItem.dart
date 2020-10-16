@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/models/movie.dart';
 import 'package:movies_app/core/models/tmdbItem.dart';
 import 'package:movies_app/ui/shared/sizeConfig.dart';
 import 'package:movies_app/ui/widgets/movieStyleCard.dart';

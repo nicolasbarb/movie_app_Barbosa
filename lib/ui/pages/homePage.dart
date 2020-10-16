@@ -7,6 +7,8 @@ import 'package:movies_app/ui/pages/detailItem.dart';
 import 'package:movies_app/ui/widgets/itemHorizontalList.dart';
 import 'package:movies_app/ui/widgets/movieCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
+    var firebaseAuth = context.watch<FirebaseAuth>();
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -147,7 +150,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ),
                 child: IconButton(
                   onPressed: () async => {
-                  await FirebaseAuth.instance.signOut(),
+                  await firebaseAuth.signOut(),
                     Navigator.pop(context)
                 },
                   icon: Icon(Icons.coronavirus,

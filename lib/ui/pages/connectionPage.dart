@@ -13,7 +13,7 @@ class ConnectionPage extends StatefulWidget {
 
 class _ConnectionPageState extends State<ConnectionPage> {
   Color bgColor = Colors.red;
-  FirebaseAuth auth;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -31,8 +31,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => auth = FirebaseAuth.instance,
+    return Provider<FirebaseAuth>(
+      create: (_) => auth,
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Center(

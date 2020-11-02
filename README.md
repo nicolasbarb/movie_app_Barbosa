@@ -7,4 +7,7 @@ A new Flutter application.
 To sign In :
 
 mail: test@movieapp.com
+
 password : azerty
+
+Firebase got a problem, you can sign in with any password. actually need to be fixed.

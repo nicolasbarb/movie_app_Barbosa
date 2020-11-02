@@ -8,7 +8,6 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
       child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
       child: Image.network(image,

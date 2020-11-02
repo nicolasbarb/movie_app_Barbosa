@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/models/movie.dart';
 import 'package:movies_app/core/models/tvShow.dart';
+import 'package:movies_app/core/services/firebaseAuthService.dart';
 import 'package:movies_app/core/services/tmdbService.dart';
 import 'package:movies_app/ui/pages/detailItem.dart';
 import 'package:movies_app/ui/widgets/itemHorizontalList.dart';
@@ -47,7 +48,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    var firebaseAuth = context.watch<FirebaseAuth>();
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -63,77 +63,82 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         fontSize: 25),
                   ),
                 ),
-                Container(
-                    height: 150,
-                    child: ItemHorizontalList(future: tmbdService.getTMDBMovieList(TMDBService.popularMovie),
-                      itemBuilder: (BuildContext context, Movie movie) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DetailItem(
-                                  tmdbItem: movie)),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 5),
-                            child: ItemCard(
-                              image: movie.poster,
+                Expanded(
+                  child: Container(
+                      child: ItemHorizontalList(future: tmbdService.getTMDBMovieList(TMDBService.popularMovie),
+                        itemBuilder: (BuildContext context, Movie movie) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(builder: (_) => DetailItem(
+                                    tmdbItem: movie)),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: ItemCard(
+                                image: movie.poster,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    )
+                          );
+                        },
+                      )
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text("Popular TV Shows", style: TextStyle(color: Colors.white, fontSize: 25),),
                 ),
-                Container(
-                    height: 150,
-                    child: ItemHorizontalList(future: tmbdService.getTMDBTvShowList(TMDBService.popularTvShow),
-                      itemBuilder: (BuildContext context, TvShow tvshow) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DetailItem(
-                                  tmdbItem: tvshow)),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 5),
-                            child: ItemCard(
-                              image: tvshow.poster,
+                Expanded(
+                  child: Container(
+                      height: 150,
+                      child: ItemHorizontalList(future: tmbdService.getTMDBTvShowList(TMDBService.popularTvShow),
+                        itemBuilder: (BuildContext context, TvShow tvshow) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(builder: (_) => DetailItem(
+                                    tmdbItem: tvshow)),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: ItemCard(
+                                image: tvshow.poster,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    )
+                          );
+                        },
+                      )
 
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text("Best Movies", style: TextStyle(color: Colors.white, fontSize: 25),),
                 ),
-                Container(
-                    height: 150,
-                    child: ItemHorizontalList(future: tmbdService.getTMDBTvShowList(TMDBService.popularTvShow),
-                      itemBuilder: (BuildContext context, TvShow tvshow) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute<void>(builder: (_) => DetailItem(
-                                  tmdbItem: tvshow)),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 5, right: 5),
-                            child: ItemCard(
-                              image: tvshow.poster,
+                Expanded(
+                  child: Container(
+                      height: 150,
+                      child: ItemHorizontalList(future: tmbdService.getTMDBTvShowList(TMDBService.popularTvShow),
+                        itemBuilder: (BuildContext context, TvShow tvshow) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(builder: (_) => DetailItem(
+                                    tmdbItem: tvshow)),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: ItemCard(
+                                image: tvshow.poster,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    )
+                          );
+                        },
+                      )
+                  ),
                 ),
               ],
             ),
@@ -150,10 +155,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ),
                 child: IconButton(
                   onPressed: () async => {
-                  await firebaseAuth.signOut(),
+                   AuthService().signOut(),
                     Navigator.pop(context)
                 },
-                  icon: Icon(Icons.coronavirus,
+                  icon: Icon(Icons.logout,
                   ),
                 ),
               ),
